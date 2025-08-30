@@ -6,7 +6,7 @@
 <title>Plano de Gestão 2026–2028 • Marcela Cristina Ozório</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{ 
     --brand-01:#0aa2c7; /* ciano */
@@ -20,7 +20,7 @@
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; font-family:Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text-on-dark); background:#0b6aa5;
+    margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text-on-dark); background:#0b6aa5;
   }
 
   /* Header */
@@ -37,11 +37,7 @@
 
   /* Hero full-bleed (fundo ocupa 100% da largura), preservando 16:9 */
   .hero{position:relative; padding-top:0; overflow:hidden}
-  .stage{position:relative; width:100vw; aspect-ratio:16 / 9; height:auto}
-  /* Fallback para navegadores sem aspect-ratio */
-  @supports not (aspect-ratio: 16 / 9){
-    .stage{width:100vw; height:56.25vw}
-  }
+  .stage{position:relative; width:100vw; height:100vh; height:100dvh; --scroll-x:32%}
   .stage::before{ /* placeholder sem imagem (vídeo faz o fundo) */
     content:""; position:absolute; inset:0; z-index:-3; background:none;
   }
@@ -49,6 +45,15 @@
     content:""; position:absolute; inset:0; z-index:-2; background:none;
   }
   .bg-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-3; filter:saturate(115%)}
+  /* Indicador de rolagem */
+  /* Ajuste X com --scroll-x (ex.: 40% ou 120px). Mantém centralização com translateX(-50%). */
+  .scroll-indicator{position:absolute; left:var(--scroll-x, 50%); bottom:64px; transform:translateX(-50%); display:flex; align-items:center; gap:10px; color:#ffffff; text-decoration:none; font-weight:600; letter-spacing:.3px; opacity:.9; z-index:5; font-size:14px}
+  .scroll-indicator:hover{opacity:1}
+  .chevrons{display:flex; flex-direction:column; gap:2px}
+  .chevron{width:12px; height:12px; border-right:2px solid #fff; border-bottom:2px solid #fff; transform:rotate(45deg); opacity:.85; animation:scrollBounce 1.6s ease-in-out infinite}
+  .chevron:nth-child(2){animation-delay:.2s; opacity:.6}
+  .chevron:nth-child(3){animation-delay:.4s; opacity:.45}
+  @keyframes scrollBounce{0%,100%{transform:translateY(0) rotate(45deg)}50%{transform:translateY(6px) rotate(45deg)}}
   .stage .shape{position:absolute; inset:0; z-index:-1; pointer-events:none}
   .stage .shape::before,
   .stage .shape::after{content:""; position:absolute; right:-12vw; top:-15vh; width:70vw; height:120vh; background:linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,0)); transform:skewX(-18deg)}
@@ -57,13 +62,13 @@
   /* Elementos posicionados em porcentagem para manter a composição da arte */
   .title-img{position:absolute; left:9%; top:20%; width:40%; max-width:none; height:auto; filter:drop-shadow(0 10px 24px rgba(0,0,0,.25));
     animation:titleIn 1.2s cubic-bezier(.22,.61,.36,1) .15s both}
-  .after-title{position:absolute; left:15%; top:65%; width:26%; height:auto; filter:drop-shadow(0 8px 20px rgba(0,0,0,.22));
+  .after-title{position:absolute; left:15%; top:70%; width:26%; height:auto; filter:drop-shadow(0 8px 20px rgba(0,0,0,.22));
     animation:titleIn 1.2s cubic-bezier(.22,.61,.36,1) .45s both}
   /* Selo (se usado) */
   .year-badge{animation:badgeIn 1s ease-out .6s both}
-  .name-badge{position:absolute; right:12%; top:20%; width:22%; height:auto; filter:drop-shadow(0 12px 24px rgba(0,0,0,.25));
+  .name-badge{position:absolute; right:10%; top:20%; width:22%; height:auto; filter:drop-shadow(0 12px 24px rgba(0,0,0,.25));
     animation:nameIn 1.2s cubic-bezier(.22,.61,.36,1) .35s both}
-  .woman{position:absolute; right:28%; bottom:0; width:38%; height:auto; filter:drop-shadow(0 20px 40px rgba(0,0,0,.35));
+  .woman{position:absolute; right:28%; bottom:0; width:35%; height:auto; filter:drop-shadow(0 20px 40px rgba(0,0,0,.35));
     animation:womanIn 1.4s cubic-bezier(.22,.61,.36,1) .5s both}
 
   @keyframes titleIn{from{opacity:0; transform:translateX(-16px)} to{opacity:1; transform:translateX(0)}}
@@ -98,15 +103,19 @@
     .name-badge{right:6%; top:10%; width:30%}
   }
   @media (max-width: 760px){
+    .stage{--scroll-x:50%}
     .nav-toggle{display:block}
     nav{position:fixed; top:72px; right:0; left:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.2)); display:none}
     nav.open{display:block}
     nav ul{flex-direction:column; padding:16px 20px}
     nav li{padding:6px 0}
-    .title-img{left:6%; top:26%; width:64%}
-    .year-badge{font-size:12px; left:18%; top:64%}
-    .woman{right:4%; width:40%}
-    .name-badge{right:4%; top:8%; width:36%}
+    /* Mobile-first layout da hero */
+    .woman{display:none}
+    .year-badge{display:none}
+    .title-img{left:50%; top:58%; width:82%; transform:translate(-50%, -50%); animation:none}
+    .name-badge{left:50%; right:auto; top:15%; width:60%; transform:translateX(-50%); animation:none}
+    .after-title{left:50%; right:auto; top:auto; bottom:88px; width:56%; transform:translateX(-50%); animation:none}
+    .scroll-indicator{bottom:24px}
   }
 </style>
 </head>
@@ -135,6 +144,14 @@
       <div class="year-badge" aria-label="Período do Plano"></div>
       <img class="name-badge" alt="Marcela Cristina Ozório" src="https://static.wixstatic.com/media/c96204_9f4f32c3c0534e6cbfa2bb5a9a1f9722~mv2.png">
       <img class="woman" alt="Foto de Marcela" src="https://static.wixstatic.com/media/c96204_56e20b8b44c04f6485c4aed355ecc3cf~mv2.png">
+      <a class="scroll-indicator" href="#plano" aria-label="Role para ver mais">
+        <span>Role para ver mais</span>
+        <span class="chevrons" aria-hidden="true">
+          <i class="chevron"></i>
+          <i class="chevron"></i>
+          <i class="chevron"></i>
+        </span>
+      </a>
     </div>
   </section>
 
