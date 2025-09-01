@@ -24,7 +24,7 @@
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text-on-dark); background:#0b6aa5;
+    margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--text-on-dark); background:#1a1a1a;
   }
 
   /* Header */
@@ -41,14 +41,14 @@
 
   /* Hero full-bleed (fundo ocupa 100% da largura), preservando 16:9 */
   .hero{position:relative; padding-top:0; overflow:hidden}
-  .stage{position:relative; width:100vw; height:100vh; height:100dvh; --scroll-x:32%}
-  .stage::before{ /* placeholder sem imagem (vídeo faz o fundo) */
-    content:""; position:absolute; inset:0; z-index:-3; background:none;
+  .stage{position:relative; width:100vw; height:100vh; height:100dvh; --scroll-x:75%}
+  .stage::before{ /* placeholder enquanto vídeo carrega */
+    content:""; position:absolute; inset:0; z-index:-4; background:#1a1a1a;
   }
   .stage::after{ /* overlay removido */
     content:""; position:absolute; inset:0; z-index:-2; background:none;
   }
-  .bg-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-3; filter:saturate(115%)}
+  .bg-image{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:-3; filter:saturate(115%); opacity:0; transition:opacity 0.5s ease}
   /* Indicador de rolagem */
   /* Ajuste X com --scroll-x (ex.: 40% ou 120px). Mantém centralização com translateX(-50%). */
   .scroll-indicator{position:absolute; left:var(--scroll-x, 50%); bottom:64px; transform:translateX(-50%); display:flex; align-items:center; gap:10px; color:#ffffff; text-decoration:none; font-weight:600; letter-spacing:.3px; opacity:.9; z-index:5; font-size:14px}
@@ -64,9 +64,9 @@
   .stage .shape::after{top:auto; bottom:-25vh; right:-20vw; width:85vw; height:100vh; opacity:.35}
 
   /* Elementos posicionados em porcentagem para manter a composição da arte */
-  .title-img{position:absolute; left:9%; top:20%; width:40%; max-width:none; height:auto; filter:drop-shadow(0 10px 24px rgba(0,0,0,.25));
+  .title-img{position:absolute; left:20%; top:20%; width:30%; max-width:none; height:auto; filter:drop-shadow(0 10px 24px rgba(0,0,0,.25));
     animation:titleIn 1.2s cubic-bezier(.22,.61,.36,1) .15s both}
-  .after-title{position:absolute; left:15%; top:70%; width:26%; height:auto; filter:drop-shadow(0 8px 20px rgba(0,0,0,.22));
+  .after-title{position:absolute; left:28%; top:88%; width:10%; height:auto; filter:drop-shadow(0 8px 20px rgba(0,0,0,.22));
     animation:titleIn 1.2s cubic-bezier(.22,.61,.36,1) .45s both}
   /* Selo (se usado) */
   .year-badge{animation:badgeIn 1s ease-out .6s both}
@@ -228,10 +228,10 @@
 
   <section class="hero" id="inicio" role="banner" aria-label="Hero do Plano de Gestão">
     <div class="stage">
-      <video class="bg-video" src="https://cdn.midjourney.com/video/af82bbed-374d-465c-b602-dbd7fc476474/0.mp4" autoplay muted loop playsinline preload="auto"></video>
+      <img class="bg-image" src="https://static.wixstatic.com/media/c96204_fbf0d03ca61d49aa9277c5b229177ed2~mv2.jpg" alt="Background">
       <span class="shape" aria-hidden="true"></span>
-      <img class="title-img" alt="Plano de Gestão" src="https://static.wixstatic.com/media/c96204_94d9bb1060704fd0bc20276d82c48dc1~mv2.png">
-      <img class="after-title" alt="Elemento gráfico abaixo do título" src="https://static.wixstatic.com/media/c96204_0e86e038cfc44df7841e22f46b1eecca~mv2.png">
+      <img class="title-img" alt="Plano de Gestão" src="https://static.wixstatic.com/media/c96204_be4d23b67ccc404588f554fa2f74d5f7~mv2.png">
+      <img class="after-title" alt="Elemento gráfico abaixo do título" src="https://static.wixstatic.com/media/c96204_634ee88314bd46e6aefc08345a50b8b5~mv2.png">
       <div class="year-badge" aria-label="Período do Plano"></div>
       <img class="name-badge" alt="Marcela Cristina Ozório" src="https://static.wixstatic.com/media/c96204_e3d323a508c54e709ce7def351cc2358~mv2.png">
       <img class="woman" alt="Foto de Marcela" src="https://static.wixstatic.com/media/c96204_1a86673223cb4268a558cf02d9b4cea3~mv2.png">
@@ -570,6 +570,20 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
   
   // Processar markdown após carregamento
   document.addEventListener('DOMContentLoaded', processMarkdown);
+
+  // Controle de carregamento da imagem de fundo
+  document.addEventListener('DOMContentLoaded', function() {
+    const bgImage = document.querySelector('.bg-image');
+    if (bgImage) {
+      bgImage.addEventListener('load', function() {
+        bgImage.style.opacity = '1';
+      });
+      // Se a imagem já estiver carregada (do cache)
+      if (bgImage.complete) {
+        bgImage.style.opacity = '1';
+      }
+    }
+  });
 
   // Lightbox da galeria
   const lightbox = document.getElementById('lightbox');
