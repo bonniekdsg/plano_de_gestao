@@ -37,7 +37,10 @@
   nav a::after{content:""; position:absolute; left:10px; right:10px; bottom:4px; height:2px; background:#cda661; transform:scaleX(0); transform-origin:left; transition:transform .35s ease; border-radius:2px}
   nav a:hover::after, nav a:focus-visible::after{transform:scaleX(1)}
   nav a:hover{color:#fff}
-  .nav-toggle{display:none; background:none; border:0; color:#fff; font-size:28px; line-height:1}
+  .nav-toggle{display:none; background:none; border:0; color:#fff; font-size:28px; line-height:1; cursor:pointer; padding:8px; transition:transform .3s ease}
+  .nav-toggle:hover{transform:scale(1.1)}
+  .nav-close{position:absolute; top:16px; right:20px; background:none; border:0; color:#fff; font-size:32px; cursor:pointer; padding:8px; opacity:.8; transition:all .3s ease; display:none}
+  .nav-close:hover{opacity:1; transform:scale(1.1)}
 
   /* Hero full-bleed (fundo ocupa 100% da largura), preservando 16:9 */
   .hero{position:relative; padding-top:0; overflow:hidden}
@@ -183,9 +186,12 @@
   }
   @media (max-width: 760px){
     .stage{--scroll-x:50%}
+    .bg-image{object-position: 70% center} /* Ajuste do posicionamento da imagem no mobile */
     .nav-toggle{display:block}
-    nav{position:fixed; top:72px; right:0; left:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.2)); display:none}
+    .nav-close{display:none!important}
+    nav{position:fixed; top:72px; right:0; left:0; background:linear-gradient(135deg, rgba(83,94,121,.95), rgba(33,40,56,.95)); backdrop-filter:blur(12px); border-top:1px solid rgba(255,255,255,.1); box-shadow:0 8px 32px rgba(0,0,0,.3); display:none}
     nav.open{display:block}
+    nav.open .nav-close{display:block!important}
     nav ul{flex-direction:column; padding:16px 20px}
     nav li{padding:6px 0}
     /* Mobile-first layout da hero */
@@ -215,12 +221,13 @@
     <div class="container">
       <button class="nav-toggle" aria-label="Abrir menu" id="navToggle">☰</button>
       <nav id="mainNav" aria-label="Navegação principal" style="margin:0 auto;">
+        <button class="nav-close" onclick="toggleMenu()">&times;</button>
         <ul>
-          <li><a href="#inicio">Início</a></li>
-          <li><a href="#plano">Apresentação</a></li>
-          <li><a href="#diretrizes">Sobre</a></li>
-          <li><a href="#propostas">Propostas</a></li>
-          <li><a href="#imagens">Imagens</a></li>
+          <li><a href="#inicio" onclick="closeMenu()">Início</a></li>
+          <li><a href="#plano" onclick="closeMenu()">Apresentação</a></li>
+          <li><a href="#diretrizes" onclick="closeMenu()">Sobre</a></li>
+          <li><a href="#propostas" onclick="closeMenu()">Propostas</a></li>
+          <li><a href="#imagens" onclick="closeMenu()">Imagens</a></li>
         </ul>
       </nav>
     </div>
@@ -230,7 +237,7 @@
     <div class="stage">
       <img class="bg-image" src="https://static.wixstatic.com/media/c96204_fbf0d03ca61d49aa9277c5b229177ed2~mv2.jpg" alt="Background">
       <span class="shape" aria-hidden="true"></span>
-      <img class="title-img" alt="Plano de Gestão" src="https://static.wixstatic.com/media/c96204_be4d23b67ccc404588f554fa2f74d5f7~mv2.png">
+      <img class="title-img" alt="Plano de Gestão" src="https://static.wixstatic.com/media/c96204_95e3220842534920bf38f7dc83678868~mv2.png">
       <img class="after-title" alt="Elemento gráfico abaixo do título" src="https://static.wixstatic.com/media/c96204_634ee88314bd46e6aefc08345a50b8b5~mv2.png">
       <div class="year-badge" aria-label="Período do Plano"></div>
       <img class="name-badge" alt="Marcela Cristina Ozório" src="https://static.wixstatic.com/media/c96204_e3d323a508c54e709ce7def351cc2358~mv2.png">
@@ -510,14 +517,29 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
   const navToggle = document.getElementById('navToggle');
   const mainNav = document.getElementById('mainNav');
   const siteHeader = document.querySelector('.site-header');
-  navToggle.addEventListener('click', () => {
+  const navClose = document.querySelector('.nav-close');
+  
+  const toggleMenu = () => {
     mainNav.classList.toggle('open');
-  });
+    navClose.style.display = mainNav.classList.contains('open') ? 'block' : 'none';
+  };
+  
+  const closeMenu = () => {
+    mainNav.classList.remove('open');
+    navClose.style.display = 'none';
+  };
+  
+  navToggle.addEventListener('click', toggleMenu);
 
   // Fechar menu ao clicar em um link (mobile)
-  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mainNav.classList.remove('open');
-  }));
+  mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  
+  // Fechar menu ao clicar fora
+  document.addEventListener('click', (e) => {
+    if (!mainNav.contains(e.target) && !navToggle.contains(e.target)) {
+      closeMenu();
+    }
+  });
 
   // Rolagem suave
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
