@@ -73,7 +73,7 @@
     animation:titleIn 1.2s cubic-bezier(.22,.61,.36,1) .45s both}
   /* Selo (se usado) */
   .year-badge{animation:badgeIn 1s ease-out .6s both}
-  .name-badge{position:absolute; right:10%; top:20%; width:22%; height:auto; filter:drop-shadow(0 12px 24px rgba(0,0,0,.25));
+  .name-badge{position:absolute; right:14%; top:20%; width:17%; height:auto; filter:drop-shadow(0 12px 24px rgba(0,0,0,.25));
     animation:nameIn 1.2s cubic-bezier(.22,.61,.36,1) .35s both}
   .woman{position:absolute; right:23%; bottom:0; width:40%; height:auto; filter:drop-shadow(0 20px 40px rgba(0,0,0,.35));
     animation:womanIn 1.4s cubic-bezier(.22,.61,.36,1) .5s both}
@@ -103,6 +103,110 @@
   .eyebrow{display:inline-block; font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:#0b6aa5; background:linear-gradient(135deg, rgba(11,106,165,.1), rgba(205,166,97,.08)); padding:8px 14px; border-radius:999px; margin-bottom:16px; font-weight:600; border:1px solid rgba(11,106,165,.12)}
   .content-card{background:linear-gradient(135deg, #ffffff 0%, #fefffe 100%); border:var(--border); border-radius:var(--radius); padding:32px; box-shadow:0 20px 40px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04); transition:transform .3s ease, box-shadow .3s ease}
   .content-card:hover{transform:translateY(-4px); box-shadow:0 30px 60px rgba(0,0,0,.08), 0 8px 20px rgba(0,0,0,.06)}
+
+  /* Hero Grid Cards - Inspired by reference image */
+  .hero-grid-card{background:linear-gradient(135deg, #ffffff 0%, #fefffe 100%); border:var(--border); border-radius:24px; padding:48px; box-shadow:0 25px 50px rgba(0,0,0,.08), 0 6px 15px rgba(0,0,0,.05); transition:transform .3s ease, box-shadow .3s ease}
+  .hero-grid-card:hover{transform:translateY(-6px); box-shadow:0 35px 70px rgba(0,0,0,.12), 0 10px 25px rgba(0,0,0,.08)}
+  
+  .hero-grid-content{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; min-height:500px}
+  .hero-grid-card.reverse .hero-grid-content{grid-template-columns:1fr 1fr}
+  .hero-grid-card.reverse .hero-text-side{order:1}
+  .hero-grid-card.reverse .hero-image-side{order:2}
+  
+  /* Hero Image Side */
+  .hero-image-side{display:flex; justify-content:center; align-items:center; position:relative}
+  .hero-image-container{position:relative; width:350px; height:400px; border-radius:20px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,.15); transition:transform .5s ease}
+  .hero-grid-card:hover .hero-image-container{transform:translateY(-8px) rotate(1deg)}
+  .hero-round-image{width:100%; height:100%; object-fit:cover; transition:transform .5s ease}
+  .hero-grid-card:hover .hero-round-image{transform:scale(1.05)}
+  
+  /* Hero Text Side */
+  .hero-text-side{display:flex; flex-direction:column; justify-content:center}
+  .hero-eyebrow{display:inline-block; font-size:13px; letter-spacing:.2em; text-transform:uppercase; color:#0b6aa5; background:linear-gradient(135deg, rgba(11,106,165,.1), rgba(205,166,97,.08)); padding:8px 16px; border-radius:20px; margin-bottom:20px; font-weight:700; border:1px solid rgba(11,106,165,.15); width:fit-content}
+  .hero-title{font-size:clamp(28px, 4.5vw, 42px); font-weight:800; line-height:1.2; color:#17324d; margin:0 0 24px; background:linear-gradient(135deg, #17324d 0%, #0b6aa5 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text}
+  .hero-description{font-size:clamp(16px, 2.8vw, 18px); color:#4a5568; line-height:1.6; margin-bottom:32px; font-weight:400}
+  
+  /* Hero CTA Button */
+  .hero-details{margin-top:24px}
+  .hero-cta-button{display:inline-flex; align-items:center; padding:16px 32px; border-radius:50px; background:linear-gradient(135deg, #cda661 0%, #b8954d 100%); color:white; text-decoration:none; font-weight:600; font-size:16px; transition:all .3s ease; box-shadow:0 8px 25px rgba(205,166,97,.3); position:relative; overflow:hidden; border:none; cursor:pointer}
+  .hero-cta-button::before{content:""; position:absolute; inset:0; background:linear-gradient(135deg, rgba(255,255,255,.2), rgba(255,255,255,.1)); opacity:0; transition:opacity .3s ease}
+  .hero-cta-button:hover{transform:translateY(-2px); box-shadow:0 12px 35px rgba(205,166,97,.4); color:white; text-decoration:none}
+  .hero-cta-button:hover::before{opacity:1}
+  .hero-cta-button span{position:relative; z-index:1}
+  .hero-cta-button:active{transform:translateY(0); box-shadow:0 6px 20px rgba(205,166,97,.3)}
+  .hero-cta-button:focus{outline:none; box-shadow:0 8px 25px rgba(205,166,97,.4), 0 0 0 3px rgba(205,166,97,.2)}
+  
+  /* Responsive Design */
+  @media (max-width: 1024px){
+    .hero-grid-content{gap:40px}
+    .hero-image-container{width:300px; height:350px}
+    .hero-grid-card{padding:36px}
+  }
+  
+  @media (max-width: 868px){
+    .hero-grid-content{grid-template-columns:1fr; gap:40px; text-align:center}
+    .hero-grid-card.reverse .hero-text-side{order:1}
+    .hero-grid-card.reverse .hero-image-side{order:2}
+    .hero-image-container{width:280px; height:320px; margin:0 auto}
+    .hero-grid-card{padding:32px}
+    
+    /* Mobile layout - both sections follow same format */
+    .hero-grid-card .hero-grid-content,
+    .hero-grid-card.reverse .hero-grid-content {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+    }
+    
+    .hero-grid-card .hero-image-side,
+    .hero-grid-card.reverse .hero-image-side {
+      order:1;
+      margin-bottom:24px;
+    }
+    
+    .hero-grid-card .hero-text-side,
+    .hero-grid-card.reverse .hero-text-side {
+      order:2;
+    }
+    
+    .hero-eyebrow{
+      display:block;
+      text-align:center;
+      margin:0 auto 20px;
+      width:fit-content;
+    }
+    
+    .hero-title{
+      text-align:center;
+    }
+    
+    .hero-description{
+      text-align:center;
+      max-width:500px;
+      margin:0 auto 32px;
+    }
+    
+    .hero-details{
+      text-align:center;
+      margin:24px auto 0;
+    }
+    
+    .hero-image-container{
+      border-radius:16px;
+      box-shadow:0 15px 30px rgba(0,0,0,.15);
+    }
+  }
+  
+  @media (max-width: 768px){
+    .hero-grid-card{padding:24px}
+    .hero-grid-content{gap:24px}
+    .hero-image-container{width:220px; height:260px; border-radius:14px}
+    .hero-cta-button{padding:14px 24px; font-size:15px; border-radius:40px}
+    .hero-title{font-size:clamp(24px, 5vw, 32px); line-height:1.3}
+    .hero-description{font-size:15px; line-height:1.5; margin-bottom:24px}
+    .hero-eyebrow{font-size:11px; padding:6px 12px; letter-spacing:.1em}
+  }
   @keyframes expandContent{from{opacity:0; transform:translateY(-10px)}to{opacity:1; transform:translateY(0)}}
   /* Botão/summary estilizado */
   details.more{margin-top:24px}
@@ -240,7 +344,7 @@
       <img class="title-img" alt="Plano de Gestão" src="https://static.wixstatic.com/media/c96204_95e3220842534920bf38f7dc83678868~mv2.png">
       <img class="after-title" alt="Elemento gráfico abaixo do título" src="https://static.wixstatic.com/media/c96204_634ee88314bd46e6aefc08345a50b8b5~mv2.png">
       <div class="year-badge" aria-label="Período do Plano"></div>
-      <img class="name-badge" alt="Marcela Cristina Ozório" src="https://static.wixstatic.com/media/c96204_e3d323a508c54e709ce7def351cc2358~mv2.png">
+      <img class="name-badge" alt="Marcela Cristina Ozório" src="https://static.wixstatic.com/media/c96204_bd8a5e6febd943a083593453508461e2~mv2.png">
       <img class="woman" alt="Foto de Marcela" src="https://static.wixstatic.com/media/c96204_47030db8939642b1b062e6f75b2f7afd~mv2.png">
       <a class="scroll-indicator" href="#plano" aria-label="Role para ver mais">
         <span>Role para ver mais</span>
@@ -270,44 +374,43 @@ Elas estão organizadas em **eixos estratégicos** que buscam alinhar:
       </div>
 
       <div class="proposals-grid">
-        <a class="proposal-btn" href="propostas/01-transformacao-tecnologica.html">
+        <a class="proposal-btn" href="propostas/01-transformacao-tecnologica.html" target="_blank">
           <span class="proposal-index">01</span>
           <span>Transformação Tecnológica e Inovação</span>
         </a>
-        <a class="proposal-btn" href="propostas/03-valorizacao-da-carreira.html">
-          <span class="proposal-index">03</span>
-          <span>Valorização da carreira</span>
-        </a>
-        <a class="proposal-btn" href="propostas/05-gestao-estrategica-transparencia.html">
-          <span class="proposal-index">05</span>
-          <span>Gestão Estratégica e Transparência</span>
-        </a>
-        <a class="proposal-btn" href="propostas/07-relacao-interinstitucional-orcamento.html">
-          <span class="proposal-index">07</span>
-          <span>Relação interinstitucional e Orçamento</span>
-        </a>
-        <a class="proposal-btn" href="propostas/09-fortalecimento-orgaos-auxiliares.html">
-          <span class="proposal-index">09</span>
-          <span>Fortalecimento dos Órgãos Auxiliares</span>
-        </a>
-
-        <a class="proposal-btn" href="propostas/02-estrutura-suporte-atuacao-finalistica.html">
+        <a class="proposal-btn" href="propostas/02-estrutura-suporte-atuacao-finalistica.html" target="_blank">
           <span class="proposal-index">02</span>
           <span>Estruturação e Suporte para Atuação Finalística</span>
         </a>
-        <a class="proposal-btn" href="propostas/04-pessoas-qualidade-de-vida.html">
+        <a class="proposal-btn" href="propostas/03-valorizacao-da-carreira.html" target="_blank">
+          <span class="proposal-index">03</span>
+          <span>Valorização da carreira</span>
+        </a>
+        <a class="proposal-btn" href="propostas/04-pessoas-qualidade-de-vida.html" target="_blank">
           <span class="proposal-index">04</span>
           <span>Pessoas e Qualidade de Vida</span>
         </a>
-        <a class="proposal-btn" href="propostas/06-capacitacao-formacao-continua.html">
+        <a class="proposal-btn" href="propostas/05-gestao-estrategica-transparencia.html" target="_blank">
+          <span class="proposal-index">05</span>
+          <span>Gestão Estratégica e Transparência</span>
+        </a>
+        <a class="proposal-btn" href="propostas/06-capacitacao-formacao-continua.html" target="_blank">
           <span class="proposal-index">06</span>
           <span>Capacitação e Formação Contínua</span>
         </a>
-        <a class="proposal-btn" href="propostas/08-aprimoramento-gestao-adm-pessoas.html">
+        <a class="proposal-btn" href="propostas/07-relacao-interinstitucional-orcamento.html" target="_blank">
+          <span class="proposal-index">07</span>
+          <span>Relação interinstitucional e Orçamento</span>
+        </a>
+        <a class="proposal-btn" href="propostas/08-aprimoramento-gestao-adm-pessoas.html" target="_blank">
           <span class="proposal-index">08</span>
           <span>Aprimoramento da Gestão Administrativa e de Pessoas</span>
         </a>
-        <a class="proposal-btn" href="propostas/10-eixo-construcao-coletiva.html">
+        <a class="proposal-btn" href="propostas/09-fortalecimento-orgaos-auxiliares.html" target="_blank">
+          <span class="proposal-index">09</span>
+          <span>Fortalecimento dos Órgãos Auxiliares</span>
+        </a>
+        <a class="proposal-btn" href="propostas/10-eixo-construcao-coletiva.html" target="_blank">
           <span class="proposal-index">10</span>
           <span>Eixo para Construção Coletiva</span>
         </a>
@@ -317,13 +420,28 @@ Elas estão organizadas em **eixos estratégicos** que buscam alinhar:
 
   <section id="plano" class="section alt">
     <div class="container">
-      <div class="content-card">
-        <span class="eyebrow">Candidatura 2026-2028</span>
-        <h2>Apresentação</h2>
-        <p>Documento estratégico para o período 2026–2028, com foco em modernização, atendimento ao cidadão e resultados mensuráveis. Esta é uma seção placeholder que você pode substituir pelo conteúdo oficial.</p>
-              <details class="more">
-          <summary>Clique e saiba mais</summary>
-          <div class="markdown-content" data-markdown>
+      <div class="hero-grid-card">
+        <div class="hero-grid-content">
+          <div class="hero-image-side">
+            <div class="hero-image-container">
+              <img src="https://static.wixstatic.com/media/c96204_ce8d67cb0f5d441aa22184936e958974~mv2.avif" alt="Dra. Marcela Cristina Ozório" class="hero-round-image">
+            </div>
+          </div>
+          
+          <div class="hero-text-side">
+            <span class="hero-eyebrow">CANDIDATURA 2026-2028</span>
+            <h1 class="hero-title">Transforme o MPAC em uma instituição de excelência unindo estratégia e compromisso</h1>
+            <p class="hero-description">Com humildade e compromisso, me coloco como candidata ao cargo de Procuradora-Geral de Justiça, visando uma gestão voltada para inovação, valorização das pessoas e proximidade com a sociedade acreana.</p>
+            
+            <div class="hero-details">
+              <a href="apresentacao.html" class="hero-cta-button" target="_blank">
+                <span>Conheça a proposta completa</span>
+              </a>
+            </div>
+
+            <!-- Conteúdo hidden para manter markdown original -->
+            <div style="display: none;">
+              <div class="markdown-content" data-markdown>
 # 1 – Apresentação
 
 **Prezados(as) colegas do MPAC,**
@@ -375,21 +493,32 @@ Quero liderar uma gestão focada em:
 **Marcela Cristina Ozório**  
 *Promotora de Justiça*  
 *Candidata à Procuradora-Geral de Justiça do Estado do Acre – Biênio 2026/2028*
+              </div>
+            </div>
           </div>
-        </details>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="diretrizes" class="section">
     <div class="container">
-      <div class="content-card">
-        <span class="eyebrow">Perfil Profissional</span>
-        <h2>Sobre</h2>
-        <p>Orientações gerais que norteiam a execução do plano: governança de dados, transformação digital, melhoria contínua de processos e valorização de pessoas.</p>
-        <details class="more">
-          <summary>Clique e saiba mais</summary>
-          <div class="markdown-content" data-markdown>
+      <div class="hero-grid-card reverse">
+        <div class="hero-grid-content">
+          <div class="hero-text-side">
+            <span class="hero-eyebrow">PERFIL PROFISSIONAL</span>
+            <h1 class="hero-title">Conheça uma trajetória de 15 anos unindo experiência e liderança</h1>
+            <p class="hero-description">Natural de Santa Isabel do Oeste/PR, graduada em Direito pela UNIR (2003), com especializações em Direito Penal, Gerenciamento de Projetos e Gestão Pública. Uma carreira sólida marcada por inovação, liderança estratégica e compromisso institucional.</p>
+            
+            <div class="hero-details">
+              <a href="sobre.html" class="hero-cta-button" target="_blank">
+                <span>Veja toda a trajetória profissional</span>
+              </a>
+            </div>
+
+            <!-- Conteúdo hidden para manter markdown original -->
+            <div style="display: none;">
+              <div class="markdown-content" data-markdown>
 # Sobre a candidata
 
 ## Trajetória Pessoal e Profissional
@@ -470,8 +599,16 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
 > **"Desejo de promover a mudança de nossa realidade social por meio de um Ministério Público proativo e resolutivo."**
 
 **Sua atuação combina experiência prática na defesa da sociedade e liderança estratégica na modernização institucional.**
+              </div>
+            </div>
           </div>
-        </details>
+          
+          <div class="hero-image-side">
+            <div class="hero-image-container">
+              <img src="https://static.wixstatic.com/media/c96204_eca78758b8094ae5bf146282be17d2f8~mv2.avif" alt="Experiência e Liderança Profissional" class="hero-round-image">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -592,6 +729,7 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
   
   // Processar markdown após carregamento
   document.addEventListener('DOMContentLoaded', processMarkdown);
+
 
   // Controle de carregamento da imagem de fundo
   document.addEventListener('DOMContentLoaded', function() {
