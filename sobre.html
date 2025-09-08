@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre a Candidata - Dra. Marcela Cristina Ozório</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-01: #0b6aa5;
+      --brand-02: #17324d;
+      --accent: #cda661;
+      --text-on-dark: #ffffff;
+      --container: 1200px;
+      --border: 1px solid rgba(17, 50, 77, 0.08);
+      --radius: 16px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; line-height: 1.6; color: #2a3f54; background: #fafcff; }
+    
+    .header {
+      background: linear-gradient(135deg, var(--brand-01) 0%, var(--brand-02) 100%);
+      padding: 20px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    }
+    
+    .header-content {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: rgba(255,255,255,.15);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all .3s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .back-button:hover {
+      background: rgba(255,255,255,.25);
+      transform: translateY(-2px);
+      color: white;
+      text-decoration: none;
+    }
+    
+    .page-title {
+      color: white;
+      font-size: clamp(20px, 3vw, 24px);
+      font-weight: 700;
+    }
+    
+    .main-content {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    
+    .content-card {
+      background: linear-gradient(135deg, #ffffff 0%, #fefffe 100%);
+      border: var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+    }
+    
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--brand-01);
+      background: linear-gradient(135deg, rgba(11,106,165,.1), rgba(205,166,97,.08));
+      padding: 8px 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      border: 1px solid rgba(11,106,165,.12);
+    }
+    
+    h1 {
+      font-size: clamp(28px, 4vw, 36px);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--brand-02) 0%, var(--brand-01) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    
+    h2 {
+      color: var(--brand-02);
+      font-size: clamp(20px, 3vw, 24px);
+      font-weight: 700;
+      margin: 32px 0 16px;
+    }
+    
+    h3 {
+      color: var(--brand-01);
+      font-size: 18px;
+      font-weight: 600;
+      margin: 24px 0 12px;
+    }
+    
+    h4 {
+      color: var(--brand-02);
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0 8px;
+    }
+    
+    p {
+      line-height: 1.7;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+    
+    strong {
+      color: var(--brand-02);
+      font-weight: 700;
+    }
+    
+    em {
+      color: var(--brand-01);
+      font-style: italic;
+    }
+    
+    ul, ol {
+      margin: 16px 0;
+      padding-left: 24px;
+    }
+    
+    li {
+      margin-bottom: 8px;
+    }
+    
+    blockquote {
+      background: linear-gradient(135deg, rgba(11,106,165,.05), rgba(205,166,97,.03));
+      border-left: 4px solid var(--accent);
+      padding: 20px 24px;
+      margin: 24px 0;
+      border-radius: 8px;
+      font-style: italic;
+      font-weight: 500;
+    }
+    
+    hr {
+      border: none;
+      height: 2px;
+      background: linear-gradient(135deg, var(--brand-01), var(--accent));
+      margin: 32px 0;
+      border-radius: 1px;
+    }
+    
+    @media (max-width: 768px) {
+      .content-card { padding: 24px; }
+      .main-content { margin: 24px auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="back-button">
+        ← Voltar ao Plano
+      </a>
+      <h1 class="page-title">Perfil Profissional</h1>
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <div class="content-card">
+      <span class="eyebrow">Perfil Profissional</span>
+      
+      <h1>Sobre a candidata</h1>
+      
+      <h2>Trajetória Pessoal e Profissional</h2>
+      
+      <p><strong>Marcela Cristina Ozório</strong> nasceu em <strong>Santa Isabel do Oeste/PR</strong>. Graduou-se em <strong>Direito</strong> pela Universidade Federal de Rondônia – Campus Cacoal, em <strong>2003</strong>.</p>
+      
+      <h3>Formação Acadêmica</h3>
+      <ul>
+        <li><strong>Especialista</strong> em Direito Penal e Processo Penal (UNESC – Faculdades Integradas de Cacoal)</li>
+        <li><strong>Especialista</strong> em Gerenciamento de Projetos (FGV – Fundação Getúlio Vargas)</li>
+        <li><strong>Especialista</strong> em Gestão Pública (IDP – Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa)</li>
+      </ul>
+      
+      <h3>Experiência como Delegada</h3>
+      <p>Atuou como <strong>Delegada de Polícia Civil</strong> no Estado de Rondônia entre <strong>2005 e 2008</strong>.</p>
+      
+      <h2>Carreira no Ministério Público do Acre</h2>
+      
+      <p>Ingressou no <strong>Ministério Público do Estado do Acre em 2009</strong>.</p>
+      
+      <h3>Atuação no Interior</h3>
+      <ul>
+        <li><strong>Comarca de Senador Guiomard</strong> (início da carreira)</li>
+        <li><strong>Comarca do Bujari</strong> (cumulação de atribuições)</li>
+      </ul>
+      
+      <h3>Atuação na Capital</h3>
+      <ul>
+        <li><strong>2010-2012:</strong> Promotoria de Combate à Violência Doméstica e Familiar contra a Mulher</li>
+        <li><strong>2013:</strong> Titularidade da 15ª Promotoria de Justiça Criminal em Rio Branco</li>
+      </ul>
+      
+      <h2>Cargos de Liderança Estratégica</h2>
+      
+      <h3>GAECO - Grupo de Atuação Especial de Combate ao Crime Organizado</h3>
+      <ul>
+        <li><strong>2010-atual:</strong> Membro designado</li>
+        <li><strong>2015-2017:</strong> <strong>Coordenação-Geral</strong></li>
+        <li><strong>2022-atual:</strong> <strong>Coordenação-Adjunta</strong></li>
+      </ul>
+      
+      <h3>NAT - Núcleo de Apoio Técnico</h3>
+      <p><strong>2014-atual:</strong> <strong>Coordenação-Geral</strong></p>
+      
+      <h4>Inovações Implementadas:</h4>
+      <ul>
+        <li><strong>Sistemas digitais:</strong> SIGEP e RETINA</li>
+        <li><strong>Protocolos de atendimento</strong> democratizados</li>
+        <li><strong>Iniciativas proativas:</strong>
+          <ul>
+            <li>COAT (Comunicados de Atividade Atípica)</li>
+            <li>COPI (Comunicado de Possíveis Irregularidades)</li>
+            <li>REDIPS (Relatório de Diagnóstico Psico-Social)</li>
+            <li><strong>NAT Itinerante</strong> (levar serviços ao interior)</li>
+          </ul>
+        </li>
+      </ul>
+      
+      <h4>Expansão Estrutural (2025):</h4>
+      <ul>
+        <li><strong>Observatório de Políticas Públicas (OPP)</strong></li>
+        <li><strong>Assessoria de Apoio no combate a crimes cibernéticos</strong></li>
+        <li><strong>Assessoria de Análise Criminal</strong></li>
+      </ul>
+      
+      <h3>SECPLAN - Secretaria de Planejamento Institucional e Inovação</h3>
+      <p><strong>2023-atual:</strong> <strong>Secretária</strong> (órgão criado em julho de 2023)</p>
+      
+      <h4>Inovações Tecnológicas:</h4>
+      <ul>
+        <li><strong>SeringalLAB</strong> (consolidação da inovação institucional)</li>
+        <li><strong>TranscreveAI</strong></li>
+        <li><strong>Anton.IA</strong></li>
+      </ul>
+      
+      <h3>GMSI - Gabinete Militar de Segurança Institucional</h3>
+      <p><strong>Atual:</strong> <strong>Gestora Estratégica</strong> (órgão vinculado à Administração Superior)</p>
+      
+      <h2>Perfil Pessoal</h2>
+      
+      <p><strong>Mulher, esposa, mãe de três filhos</strong>, criada e formada em cidade do interior da região Norte, em Rondônia, foi a <strong>primeira de sua família a cursar nível superior</strong> e seguir carreira jurídica.</p>
+      
+      <p>Essa trajetória traduz valores de <em>perseverança</em>, <em>determinação</em>, <em>resiliência</em> e <em>compromisso institucional</em>, além do desejo de promover a mudança de nossa realidade social por meio de um Ministério Público proativo e resolutivo.</p>
+      
+      <hr>
+      
+      <blockquote><strong>"Desejo de promover a mudança de nossa realidade social por meio de um Ministério Público proativo e resolutivo."</strong></blockquote>
+      
+      <p><strong>Sua atuação combina experiência prática na defesa da sociedade e liderança estratégica na modernização institucional.</strong></p>
+    </div>
+  </main>
+</body>
+</html>
