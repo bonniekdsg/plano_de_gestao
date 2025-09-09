@@ -240,7 +240,7 @@
   .gallery-grid a::before{content:""; position:absolute; inset:0; background:linear-gradient(135deg, rgba(205,166,97,.1), rgba(11,106,165,.08)); opacity:0; transition:opacity .3s ease; z-index:1; pointer-events:none}
   .gallery-grid a:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,.15); border-color:#cda661}
   .gallery-grid a:hover::before{opacity:1}
-  .gallery-grid img{display:block; width:100%; aspect-ratio: 16 / 10; object-fit:cover; transition:transform .4s cubic-bezier(.4,0,.2,1)}
+  .gallery-grid img{display:block; width:100%; aspect-ratio: 4 / 3; object-fit:cover; transition:transform .4s cubic-bezier(.4,0,.2,1)}
   .gallery-grid a:hover img{transform:scale(1.08)}
 
   /* Lightbox (modal de imagem) */
@@ -248,18 +248,78 @@
   .lightbox.open{display:flex; opacity:1}
   .lightbox-content{max-width:90vw; max-height:90vh; position:relative; transform:scale(.9); transition:transform .3s cubic-bezier(.4,0,.2,1)}
   .lightbox.open .lightbox-content{transform:scale(1)}
-  .lightbox-img{display:block; max-width:100%; max-height:90vh; border-radius:16px; box-shadow:0 30px 80px rgba(0,0,0,.6)}
-  .lightbox-close{position:absolute; top:-16px; right:-16px; width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, rgba(11,106,165,.9), rgba(23,50,77,.9)); color:#fff; border:2px solid rgba(255,255,255,.2); font-size:24px; cursor:pointer; transition:all .3s ease; backdrop-filter:blur(10px)}
+  .lightbox-figure{position:relative; border-radius:16px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.6); line-height:0}
+  .lightbox-img{display:block; max-width:100%; max-height:90vh; border-radius:0; box-shadow:none}
+  .lightbox-caption{position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 100%); color:#fff; padding:48px 24px 24px; text-align:left; line-height:1.4; opacity:0; transform:translateY(16px); transition:all .3s ease .1s; cursor:default}
+  .lightbox.open .lightbox-caption{opacity:1; transform:translateY(0)}
+  .lightbox-title{font-size:20px; font-weight:700; margin:0 0 8px; text-shadow:0 1px 4px rgba(0,0,0,.5)}
+  .lightbox-description{font-size:16px; margin:0; text-shadow:0 1px 4px rgba(0,0,0,.5)}
+  .lightbox-close{position:absolute; top:12px; right:12px; width:44px; height:44px; z-index:5; border-radius:50%; background:linear-gradient(135deg, rgba(11,106,165,.9), rgba(23,50,77,.9)); color:#fff; border:2px solid rgba(255,255,255,.2); font-size:24px; cursor:pointer; transition:all .3s ease; backdrop-filter:blur(10px)}
   .lightbox-close:hover{background:linear-gradient(135deg, #cda661, #b8914d); transform:scale(1.1)}
+
+  /* Modal de Conteúdo */
+  .content-modal{
+    position:fixed; inset:0; background:rgba(0,0,0,.7); backdrop-filter:blur(10px);
+    display:flex; align-items:center; justify-content:center;
+    z-index:3000; padding:20px;
+    opacity:0; visibility:hidden; transition:all .4s ease;
+  }
+  .content-modal.open{opacity:1; visibility:visible}
+
+  .content-modal-box{
+    background:linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    width:100%; max-width:800px;
+    max-height:90vh; overflow-y:auto;
+    border-radius:20px;
+    box-shadow:0 25px 50px rgba(0,0,0,.4);
+    position:relative;
+    transform:scale(.95) translateY(10px);
+    transition:transform .4s cubic-bezier(.22,.61,.36,1);
+  }
+  .content-modal.open .content-modal-box{transform:scale(1) translateY(0)}
+  
+  .content-modal-header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px;
+    background:linear-gradient(135deg, #535e79, #212838);
+    color:white;
+    position:sticky; top:0; z-index:10;
+    border-bottom:1px solid rgba(255,255,255,.1);
+    border-radius:20px 20px 0 0;
+  }
+  
+  .content-modal-title{font-size:clamp(16px, 2.5vw, 18px); font-weight:600; margin:0; line-height:1.4}
+  
+  .content-modal-close{
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.2);
+    color:white;
+    width:36px; height:36px;
+    border-radius:50%;
+    font-size:20px;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all .3s ease;
+  }
+  .content-modal-close:hover{background:rgba(255,255,255,.25); transform:scale(1.1)}
+  
+  .content-modal-body{padding:32px 32px 40px; background:#fff; color:#17324d; border-radius:0 0 20px 20px}
+
+  /* Custom scrollbar for modal */
+  .content-modal-box::-webkit-scrollbar { width: 12px; }
+  .content-modal-box::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 0 20px 20px 0; }
+  .content-modal-box::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 10px; border: 3px solid #e2e8f0; }
+  .content-modal-box::-webkit-scrollbar-thumb:hover { background-color: #64748b; }
 
   /* Estilos para conteúdo markdown */
   .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6{color:#17324d; margin:24px 0 16px; font-weight:700; line-height:1.3}
   .markdown-content h1{font-size:32px; border-bottom:3px solid #cda661; padding-bottom:8px}
-  .markdown-content h2{font-size:28px; color:#0b6aa5}
-  .markdown-content h3{font-size:24px; color:#17324d}
+  .markdown-content h2{font-size:clamp(24px, 4vw, 28px); color:#0b6aa5; border-bottom:2px solid rgba(11,106,165,.1); padding-bottom:12px; margin-bottom:24px}
+  .markdown-content h3{font-size:clamp(18px, 3vw, 22px); color:#17324d; display:flex; align-items:center; gap:12px; margin-top:32px}
+  .markdown-content h3 svg{width:24px; height:24px; flex-shrink:0; color:#0b6aa5}
   .markdown-content h4{font-size:20px}
   .markdown-content h5, .markdown-content h6{font-size:18px}
-  .markdown-content p{margin:16px 0; line-height:1.7; color:#2a3f54}
+  .markdown-content p{margin:16px 0; line-height:1.8; color:#475569; font-size:16px}
   .markdown-content strong{color:#17324d; font-weight:700}
   .markdown-content em{color:#0b6aa5; font-style:italic}
   .markdown-content ul, .markdown-content ol{margin:16px 0; padding-left:24px}
@@ -374,46 +434,46 @@ Elas estão organizadas em **eixos estratégicos** que buscam alinhar:
       </div>
 
       <div class="proposals-grid">
-        <a class="proposal-btn" href="propostas/01-transformacao-tecnologica.html" target="_blank">
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-01" data-modal-title="01 - Transformação Tecnológica e Inovação">
           <span class="proposal-index">01</span>
           <span>Transformação Tecnológica e Inovação</span>
-        </a>
-        <a class="proposal-btn" href="propostas/02-estrutura-suporte-atuacao-finalistica.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-02" data-modal-title="02 - Estruturação e Suporte para Atuação Finalística">
           <span class="proposal-index">02</span>
           <span>Estruturação e Suporte para Atuação Finalística</span>
-        </a>
-        <a class="proposal-btn" href="propostas/03-valorizacao-da-carreira.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-03" data-modal-title="03 - Valorização da carreira">
           <span class="proposal-index">03</span>
           <span>Valorização da carreira</span>
-        </a>
-        <a class="proposal-btn" href="propostas/04-pessoas-qualidade-de-vida.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-04" data-modal-title="04 - Pessoas e Qualidade de Vida">
           <span class="proposal-index">04</span>
           <span>Pessoas e Qualidade de Vida</span>
-        </a>
-        <a class="proposal-btn" href="propostas/05-gestao-estrategica-transparencia.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-05" data-modal-title="05 - Gestão Estratégica e Transparência">
           <span class="proposal-index">05</span>
           <span>Gestão Estratégica e Transparência</span>
-        </a>
-        <a class="proposal-btn" href="propostas/06-capacitacao-formacao-continua.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-06" data-modal-title="06 - Capacitação e Formação Contínua">
           <span class="proposal-index">06</span>
           <span>Capacitação e Formação Contínua</span>
-        </a>
-        <a class="proposal-btn" href="propostas/07-relacao-interinstitucional-orcamento.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-07" data-modal-title="07 - Relação interinstitucional e Orçamento">
           <span class="proposal-index">07</span>
           <span>Relação interinstitucional e Orçamento</span>
-        </a>
-        <a class="proposal-btn" href="propostas/08-aprimoramento-gestao-adm-pessoas.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-08" data-modal-title="08 - Aprimoramento da Gestão Administrativa e de Pessoas">
           <span class="proposal-index">08</span>
           <span>Aprimoramento da Gestão Administrativa e de Pessoas</span>
-        </a>
-        <a class="proposal-btn" href="propostas/09-fortalecimento-orgaos-auxiliares.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-09" data-modal-title="09 - Fortalecimento dos Órgãos Auxiliares">
           <span class="proposal-index">09</span>
           <span>Fortalecimento dos Órgãos Auxiliares</span>
-        </a>
-        <a class="proposal-btn" href="propostas/10-eixo-construcao-coletiva.html" target="_blank">
+        </button>
+        <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-10" data-modal-title="10 - Eixo para Construção Coletiva">
           <span class="proposal-index">10</span>
           <span>Eixo para Construção Coletiva</span>
-        </a>
+        </button>
       </div>
     </div>
   </section>
@@ -430,13 +490,13 @@ Elas estão organizadas em **eixos estratégicos** que buscam alinhar:
           
           <div class="hero-text-side">
             <span class="hero-eyebrow">CANDIDATURA 2026-2028</span>
-            <h1 class="hero-title">Transforme o MPAC em uma instituição de excelência unindo estratégia e compromisso</h1>
+            <h1 class="hero-title">Gestão com diálogo, inovação e compromisso com o futuro.</h1>
             <p class="hero-description">Com humildade e compromisso, me coloco como candidata ao cargo de Procuradora-Geral de Justiça, visando uma gestão voltada para inovação, valorização das pessoas e proximidade com a sociedade acreana.</p>
             
             <div class="hero-details">
-              <a href="apresentacao.html" class="hero-cta-button" target="_blank">
+              <button type="button" class="hero-cta-button" data-modal-trigger="content-apresentacao" data-modal-title="Apresentação da Candidatura">
                 <span>Conheça a proposta completa</span>
-              </a>
+              </button>
             </div>
 
             <!-- Conteúdo hidden para manter markdown original -->
@@ -511,9 +571,9 @@ Quero liderar uma gestão focada em:
             <p class="hero-description">Natural de Santa Isabel do Oeste/PR, graduada em Direito pela UNIR (2003), com especializações em Direito Penal, Gerenciamento de Projetos e Gestão Pública. Uma carreira sólida marcada por inovação, liderança estratégica e compromisso institucional.</p>
             
             <div class="hero-details">
-              <a href="sobre.html" class="hero-cta-button" target="_blank">
+              <button type="button" class="hero-cta-button" data-modal-trigger="content-sobre" data-modal-title="Perfil Profissional">
                 <span>Veja toda a trajetória profissional</span>
-              </a>
+              </button>
             </div>
 
             <!-- Conteúdo hidden para manter markdown original -->
@@ -625,14 +685,14 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
 *Clique nas imagens para visualizá-las em tamanho maior.*
       </div>
       <div class="gallery-grid">
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 1"></a>
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 2"></a>
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 3"></a>
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 4"></a>
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 5"></a>
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 6"></a>
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 7"></a>
-        <a href="#"><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 8"></a>
+        <a href="https://static.wixstatic.com/media/c96204_b8fbd5a506a94f3cbf0e362f113bfa83~mv2.jpg" data-title="Marcela Cristina Ozório discursando" data-description="Compromisso com diálogo e transparência."><img src="https://static.wixstatic.com/media/c96204_bfe2a24b859e45feaf524f5aa93e42d3~mv2.png" alt="Imagem 1"></a>
+        <a href="https://static.wixstatic.com/media/c96204_488336c235654e9dacbe01bddc68e3f6~mv2.jpg" data-title="Marcela em sessão de planejamento" data-description="Gestão colaborativa e planejamento estratégico."><img src="https://static.wixstatic.com/media/c96204_5907be3a0bee4b14964f8f66cf93a09c~mv2.png" alt="Imagem 2"></a>
+        <a href="https://static.wixstatic.com/media/c96204_2bab90e4c4044e86bb35b8d576cff9d1~mv2.jpg" data-title="Marcela no evento Conecta MPAC" data-description="Integração e modernização institucional."><img src="https://static.wixstatic.com/media/c96204_f34300e8aba34a49b61fdcd26540e1ae~mv2.png" alt="Imagem 3"></a>
+        <a href="https://static.wixstatic.com/media/c96204_d548f51606bf43d2ac127aa08bc1b377~mv2.jpeg" data-title="Marcela recebendo prêmio de inovação" data-description="Reconhecimento a projetos que transformam o sistema de justiça."><img src="https://static.wixstatic.com/media/c96204_337bc06f6a5a4a23800ff47a0f2b28aa~mv2.png" alt="Imagem 4"></a>
+        <a href="https://static.wixstatic.com/media/c96204_4eaa3a5debd74647a09761d3fdfbdb83~mv2.png" data-title="Atuação institucional" data-description="Proximidade com a sociedade acreana."><img src="https://static.wixstatic.com/media/c96204_a051242e0b7d40e997d37cc128759102~mv2.png" alt="Imagem 5"></a>
+        <a href="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" data-title="Atuação institucional" data-description="Resultados e compromisso público."><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 6"></a>
+        <a href="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" data-title="Atuação institucional" data-description="Transparência e eficiência."><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 7"></a>
+        <a href="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" data-title="Atuação institucional" data-description="Modernização e inovação."><img src="https://static.wixstatic.com/media/c96204_d4b24d3bf07649cf8e2de057b1ff086c~mv2.avif" alt="Imagem 8"></a>
       </div>
     </div>
   </section>
@@ -641,7 +701,590 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
   <div class="lightbox" id="lightbox" aria-modal="true" role="dialog" aria-label="Visualização de imagem">
     <div class="lightbox-content">
       <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">×</button>
-      <img class="lightbox-img" id="lightboxImg" alt="Imagem ampliada" src=""/>
+      <div class="lightbox-figure">
+        <img class="lightbox-img" id="lightboxImg" alt="Imagem ampliada" src=""/>
+        <div class="lightbox-caption">
+          <h3 class="lightbox-title" id="lightboxTitle"></h3>
+          <p class="lightbox-description" id="lightboxDesc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Conteúdo -->
+  <div class="content-modal" id="contentModal" aria-modal="true" role="dialog" aria-labelledby="contentModalTitle">
+    <div class="content-modal-box">
+      <header class="content-modal-header">
+        <h2 class="content-modal-title" id="contentModalTitle"></h2>
+        <button class="content-modal-close" id="contentModalClose" aria-label="Fechar">×</button>
+      </header>
+      <div class="content-modal-body" id="contentModalBody">
+        <!-- Conteúdo será injetado aqui -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Conteúdos Ocultos para o Modal -->
+  <div id="hidden-content" style="display: none;">
+    <div id="content-apresentacao">
+# 1 – Apresentação
+
+**Prezados(as) colegas do MPAC,**
+
+Com **humildade e compromisso**, me coloco como candidata ao cargo de **Procuradora-Geral de Justiça** do Ministério Público do Estado do Acre para o **biênio 2026/2028**.
+
+## Minha Trajetória
+
+Minha trajetória no MPAC sempre foi pautada pela defesa de um Ministério Público:
+- **Independente**
+- **Autônomo** 
+- **Comprometido** com sua missão constitucional
+
+Acredito que nossa instituição só alcança sua verdadeira força quando atua com *coragem*, *inovação* e *proximidade* da população que representamos.
+
+## Visão de Gestão
+
+Tenho convicção de que é possível conduzir uma gestão voltada para:
+
+1. **Transformação tecnológica e inovação**
+2. **Cuidado com as pessoas**
+3. **Valorização da carreira**
+4. **Qualidade de vida**
+
+> O objetivo é gerar sentimento de pertencimento a este Estado e empatia com as dores do nosso povo.
+
+## Desafios do Estado do Acre
+
+Esse compromisso é ainda mais necessário em um Estado que enfrenta:
+
+- **Altos índices de criminalidade** e atuação de organizações criminosas
+- **Desafios ambientais** da Amazônia pressionada pelo desmatamento
+- **Vulnerabilidades sociais** acentuadas pela pobreza e desigualdade
+- **Limitações orçamentárias** e de infraestrutura
+
+## Compromisso com a Excelência
+
+Quero liderar uma gestão focada em:
+
+- ✅ **Reconhecimento de direitos** e defesa das prerrogativas dos membros
+- ✅ **Fortalecimento da atuação** na tutela coletiva
+- ✅ **Combate ao crime** e promoção da justiça social
+- ✅ **Conexão** com as necessidades da sociedade acreana
+
+---
+
+**Esta é uma aposta no novo**, em uma forma de gestão *colaborativa*, *empática*, *integrada* e *transformadora*.
+
+**Marcela Cristina Ozório**  
+*Promotora de Justiça*  
+*Candidata à Procuradora-Geral de Justiça do Estado do Acre – Biênio 2026/2028*
+    </div>
+    <div id="content-sobre">
+# Sobre a candidata
+
+## Trajetória Pessoal e Profissional
+
+**Marcela Cristina Ozório** nasceu em **Santa Isabel do Oeste/PR**. Graduou-se em **Direito** pela Universidade Federal de Rondônia – Campus Cacoal, em **2003**.
+
+### Formação Acadêmica
+- **Especialista** em Direito Penal e Processo Penal (UNESC – Faculdades Integradas de Cacoal)
+- **Especialista** em Gerenciamento de Projetos (FGV – Fundação Getúlio Vargas)  
+- **Especialista** em Gestão Pública (IDP – Instituto Brasileiro de Ensino, Desenvolvimento e Pesquisa)
+
+### Experiência como Delegada
+Atuou como **Delegada de Polícia Civil** no Estado de Rondônia entre **2005 e 2008**.
+
+## Carreira no Ministério Público do Acre
+
+Ingressou no **Ministério Público do Estado do Acre em 2009**.
+
+### Atuação no Interior
+- **Comarca de Senador Guiomard** (início da carreira)
+- **Comarca do Bujari** (cumulação de atribuições)
+
+### Atuação na Capital
+- **2010-2012:** Promotoria de Combate à Violência Doméstica e Familiar contra a Mulher
+- **2013:** Titularidade da 15ª Promotoria de Justiça Criminal em Rio Branco
+
+## Cargos de Liderança Estratégica
+
+### GAECO - Grupo de Atuação Especial de Combate ao Crime Organizado
+- **2010-atual:** Membro designado
+- **2015-2017:** **Coordenação-Geral** 
+- **2022-atual:** **Coordenação-Adjunta**
+
+### NAT - Núcleo de Apoio Técnico
+**2014-atual:** **Coordenação-Geral**
+
+#### Inovações Implementadas:
+- **Sistemas digitais:** SIGEP e RETINA
+- **Protocolos de atendimento** democratizados
+- **Iniciativas proativas:**
+  - COAT (Comunicados de Atividade Atípica)
+  - COPI (Comunicado de Possíveis Irregularidades)
+  - REDIPS (Relatório de Diagnóstico Psico-Social)
+  - **NAT Itinerante** (levar serviços ao interior)
+
+#### Expansão Estrutural (2025):
+- **Observatório de Políticas Públicas (OPP)**
+- **Assessoria de Apoio no combate a crimes cibernéticos**
+- **Assessoria de Análise Criminal**
+
+### SECPLAN - Secretaria de Planejamento Institucional e Inovação
+**2023-atual:** **Secretária** (órgão criado em julho de 2023)
+
+#### Inovações Tecnológicas:
+- **SeringalLAB** (consolidação da inovação institucional)
+- **TranscreveAI** 
+- **Anton.IA**
+
+> *Gestão baseada em planejamento estruturado, uso intensivo de dados e tecnologia*
+
+### GMSI - Gabinete Militar de Segurança Institucional
+**Atual:** **Gestora Estratégica**
+
+## Perfil Pessoal
+
+- **Mulher, esposa, mãe de três filhos**
+- **Criada e formada** em cidade do interior da região Norte (Rondônia)
+- **Primeira de sua família** a cursar nível superior e seguir carreira jurídica
+
+### Valores que Definem sua Trajetória:
+- **Perseverança**
+- **Determinação** 
+- **Resiliência**
+- **Compromisso institucional**
+
+---
+
+> **"Desejo de promover a mudança de nossa realidade social por meio de um Ministério Público proativo e resolutivo."**
+
+**Sua atuação combina experiência prática na defesa da sociedade e liderança estratégica na modernização institucional.**
+    </div>
+    <div id="content-proposta-01">
+
+
+Sabemos o quanto a rotina das promotorias, procuradorias e setores da área meio é **exaustiva e desafiadora, especialmente no interior**. Nossa proposta neste eixo é **modernizar**, **simplificar processos** e **automatizar**, de modo a que tenhamos mais tempo para nos dedicar às atividades estratégicas. Para tanto, busca-se:
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg> **Inteligência Artificial Institucional**
+
+- Adquirir maior estrutura para a continuidade do desenvolvimento da Anton.IA, assegurando acesso amplo a todos os membros e servidores. Nosso objetivo é que a Anton.IA seja utilizada como **Assistente Inteligente do Gestor**, cruzando dados, gerando gráficos e tabelas, permitindo a gerência otimizada de todos os dados administrativos, financeiros e de pessoal da instituição. Na área fim, objetiva-se utilizar como ferramenta de **geração de minutas** e realização de pesquisas, além de orquestrar a integração com outras soluções de Inteligência Artificial.
+
+- Lançar e/ou aperfeiçoar o **Portal de Inteligência Artificial do MPAC** (TranscreveAI, Anton.IA, minutas, etc.), reunindo ferramentas e funcionalidades disponíveis para automatizar rotinas de trabalho e apoiar a atividade finalística**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> **Modernização de Sistemas**
+
+- Evoluir continuamente os sistemas ministeriais em uso pelo MPAC, atualizando o parque de equipamentos, ampliando a conectividade nas unidades do interior e implantando novas tecnologias que garantam maior **eficiência operacional**.
+
+- Automatizar o Relatório Anual de Atividades no SIGE, permitindo que as informações sejam extraídas diretamente a partir da execução e alimentação das **metas previstas no Plano Operacional de Atuação**.
+
+- **Ampliar a capacidade** dos sistemas **SIGE** e **SIGEP**, tornando-os, inclusive, aplicativos.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18h4"/><path d="m12 12 4 4"/><path d="M12 2a10 10 0 0 0-4.3 19.1"/><circle cx="12" cy="12" r="10"/></svg> **Fortalecimento da Equipe de TI**
+
+- **Ampliar o quadro de desenvolvedores** da instituição, a fim de fomentar o **desenvolvimento de soluções tecnológicas próprias** ou **compartilhadas** em cooperação com outras instituições.
+
+- **Instituir a Gratificação de Incentivo em Tecnologia da Informação (GITI)**, para promover a **valorização e a permanência** dos servidores que atuam na área de TI, assegurando a **continuidade dos serviços tecnológicos** da instituição.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> **Gestão do Conhecimento**
+
+- **Criar repositório digital institucional**, reunindo **jurisprudência, pareceres, peças, artigos** e **boas práticas**, com **mecanismos de pesquisa inteligente** para **apoio imediato** aos membros e servidores.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> **Investigação e Segurança Digital**
+
+- **Aperfeiçoar os meios de investigação** por meio da **integração de sistemas interinstitucionais**, ampliando a eficiência na **coleta, análise e cruzamento de informações**.
+
+- **Implementar protocolos tecnológicos** que assegurem a **cadeia de custódia**, garantindo a **confiabilidade e integridade** dos elementos de prova.
+
+- **Fortalecer a atuação em ambiente cibernético**, ampliando a capacidade institucional no enfrentamento a **crimes digitais, fraudes financeiras e delitos transnacionais**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> **Gestão Estratégica com Dados**
+
+- **Implantar sistema de gerenciamento da atuação finalística**, com **dashboards interativos** de uso direto pelos membros em suas unidades, permitindo o **acompanhamento da produtividade**, de **indicadores estratégicos** e oferecendo **suporte à tomada de decisões** em todas as áreas de atuação.
+
+- **Adotar soluções de Inteligência Artificial e jurimetria**, para subsidiar **investigações**, **análises de dados** e **decisões estratégicas**, promovendo maior **previsibilidade e eficiência institucional**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> **Cooperação e Inovação**
+
+- **Fortalecer a cultura da inovação**, por meio de **capacitações, oficinas de criatividade**, incentivo ao uso de **metodologias ágeis** e **difusão de boas práticas** voltadas à modernização institucional.
+
+- **Celebrar cooperação** com **universidades, centros de pesquisa** e **outros Ministérios Públicos** para desenvolvimento conjunto de soluções em **IA, big data e transformação digital**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> **Conectividade e Mobilidade**
+
+- **Garantir maior conectividade** aos membros em todos os ambientes de atuação, mediante a disponibilização de **recursos tecnológicos** que assegurem **mobilidade, acesso seguro às informações** e **continuidade do trabalho ministerial**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> **Transparência e Atendimento ao Cidadão**
+
+- **Ampliar o acesso do cidadão** aos **serviços digitais do MPAC**, com **plataformas mais simples, seguras e acessíveis**, fortalecendo a **transparência**, a **proximidade institucional** e a **efetividade no atendimento**.
+
+> **Meta:** Transformar o MPAC em referência nacional de inovação tecnológica no sistema de justiça, garantindo que a tecnologia seja uma aliada estratégica na defesa da sociedade acreana.
+    </div>
+    <div id="content-proposta-02">
+## Estruturação e Suporte para Atuação Finalística
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> **Apoio Técnico Especializado**
+
+- Implantar **núcleo especializado de apoio técnico-jurídico**, destinado a oferecer suporte em julgamentos e ações de maior complexidade, além de realizar o **monitoramento proativo** das ações constitucionais nos tribunais superiores.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> **Regionalização dos Órgãos Auxiliares**
+
+- Implantar, de forma **gradativa**, **unidades regionalizadas** dos nossos órgãos auxiliares, com **equipes multisetoriais** de trabalho voltadas para atender as demandas das regionais do **Alto Acre, Juruá e Tarauacá/Envira**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg> **Promotorias Regionais**
+
+- Realizar **estudo de viabilidade** para criação **progressiva de promotorias regionais** de defesa de direitos e interesses **transindividuais**, com atuação **extrajudicial** voltada à **solução de demandas locais**, à **indução de políticas públicas** e ao **fortalecimento da resolutividade institucional**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> **Modernização da Fiscalização de Acordos**
+
+- **Estruturar e modernizar** a **fiscalização dos acordos** firmados pelo Ministério Público (**ANPP, TAC, Acordos de Leniência** e outros instrumentos de natureza resolutiva).
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> **Fortalecimento do ANPP**
+
+- **Fortalecer a aplicação do ANPP**, assegurando sua **condução direta** pelo Ministério Público, com **ênfase na reparação do dano** e garantindo que os valores decorrentes — excetuados aqueles destinados à reparação das vítimas — sejam **revertidos ao fortalecimento das atividades finalísticas** do MPAC.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> **Suporte às Vítimas**
+
+- **Aprimorar o suporte técnico e psicossocial às vítimas**, em articulação com o **Centro de Atendimento à Vítima (CAV)**, ampliando a **presença institucional** e fortalecendo as **políticas de proteção integral**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a4 4 0 0 0-7.4-2.1L3.5 15.5a4 4 0 1 0 5.6 5.6L18 12.5a2 2 0 0 0-2.8-2.8L6.5 18.5a1 1 0 0 0 1.4 1.4L17 11.5a.5.5 0 0 0-.7-.7L8 17.5"/></svg> **Gestão de Substituições**
+
+- **Aprimorar a gestão de substituições em audiências**, com a implementação de **mecanismos organizacionais e tecnológicos**, além da **previsão de benefícios adequados aos substitutos**, de forma a **evitar prejuízos** decorrentes da impossibilidade de atuação do **membro natural**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/><path d="M5 22v-5"/><path d="m5 17-2 5"/><path d="m5 17 2 5"/><path d="M19 22v-5"/><path d="m19 17-2 5"/><path d="m19 17 2 5"/></svg> **Métodos Autocompositivos**
+
+- **Instituir câmaras de conciliação e reparação de danos** nas **cinco regionais** do Estado, priorizando o uso de **métodos autocompositivos** no exercício das atribuições ministeriais.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> **Banco de Boas Práticas**
+
+- **Criar um banco de boas práticas do Segundo Grau**, para **difundir soluções jurídicas**, **votos** e **precedentes relevantes** produzidos pelos integrantes do **Colégio de Procuradores**.
+
+> **Objetivo:** Garantir que o MPAC tenha a infraestrutura e os recursos necessários para uma atuação ministerial eficaz, resolutiva e próxima da sociedade acreana, especialmente nas regiões do interior do Estado.
+    </div>
+    <div id="content-proposta-03">
+
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> **Política Remuneratória**
+
+- Assegurar a continuidade da política remuneratória justa e isonômica, promovendo a paridade com a magistratura e a recomposição periódica dos subsídios.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> **Benefícios e Direitos**
+
+- Ampliar benefícios indenizatórios e assistenciais, com especial atenção à extensão de direitos a membros inativos.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg> **Mobilidade na Carreira**
+
+- Dar continuidade à política de rápida mobilidade na carreira, mediante critérios de movimentação funcional baseados no merecimento e aplicados com transparência.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.232 5.232 3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> **Reconhecimento Público**
+
+- Valorizar publicamente a atuação finalística e social dos membros, por meio de **projetos institucionais de reconhecimento e visibilidade**, com **estratégias de comunicação regionalizada** que deem **destaque à atuação em todo território acreano** e **fortaleçam a proximidade** com a sociedade local.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> **Participação e Diálogo**
+
+- **Ampliar os canais de escuta e diálogo** com os membros, para **formulação participativa** de **políticas de carreira**, reforçando a **transparência** e a **corresponsabilidade** nas decisões administrativas.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> Valorização do Desempenho
+
+- **Estabelecer critérios objetivos** de **valorização do desempenho finalístico** e da **inovação**, com **reconhecimento institucional** que **estimule boas práticas** e **iniciativas transformadoras**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> Teletrabalho e Qualidade de Vida
+
+- **Realizar estudo de viabilidade** para **regulamentar o teletrabalho** para membros do Ministério Público, como medida de **valorização da carreira** e **promoção de qualidade de vida**, prevendo **hipóteses, limites e ressalvas** necessárias para assegurar a **continuidade da atividade finalística**, a **eficiência institucional** e a **compatibilidade** com as **especificidades locais**.
+
+> **Compromisso:** Construir uma carreira ministerial que reconheça o mérito, valorize a dedicação e promova o desenvolvimento contínuo de todos os integrantes do MPAC, fortalecendo a instituição através do cuidado com as pessoas.
+    </div>
+    <div id="content-proposta-04">
+## Pessoas e Qualidade de Vida
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Liderança Humanizada
+
+- **Fomentar uma liderança humanizada e empática**, na qual os integrantes do MPAC sejam reconhecidos como o **alicerce da atuação ministerial**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Valorização por Competências
+
+- **Valorizar os recursos humanos** a partir de suas **competências** e **áreas de interesse**, criando mecanismos que possibilitem a **realocação**, inclusive em caráter **temporário**, conciliando **vocação individual** e **necessidades institucionais**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Saúde e Bem-estar
+
+- **Promover condições adequadas** de **saúde** e **qualidade de vida no trabalho**, com **programas práticos** voltados ao **bem-estar físico, psicológico e social** de membros, servidores, terceirizados e estagiários.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Acesso ao Interior
+
+- **Garantir o acesso** das unidades do **interior** do Estado aos atendimentos especializados disponibilizados pelo **Centro de Saúde Especializado (CES) do MPAC**, seja por meio de **atendimento remoto**, **ações itinerantes** ou **parcerias** com instituições locais.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="8" height="8" x="8" y="8" rx="2"/><path d="M4 8h4"/><path d="M16 8h4"/><path d="M8 4v4"/><path d="M8 16v4"/></svg> Trabalho Híbrido
+
+- **Aprimorar a política de gestão de pessoas**, com **modelos de realocação temporária** e de **trabalho híbrido**.
+
+### <svg xmlns="ttp://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Infraestrutura Adequada
+
+- **Oferecer condições adequadas** de **infraestrutura de trabalho**, assegurando **ergonomia, segurança e acessibilidade** nos ambientes laborais.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Integração e Engajamento
+
+- **Estimular atividades de integração e engajamento**, promovendo **ações culturais, esportivas e sociais** que reforcem o **senso de pertencimento** e a **coesão institucional**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Valorização de Aposentados
+
+- **Valorizar aposentados e pensionistas** como **parte ativa da instituição**, por meio de **programas de integração**, **memória institucional** e **reconhecimento**.
+
+> **Visão:** Uma instituição que cuida das pessoas é uma instituição forte. O bem-estar de cada integrante do MPAC é fundamental para uma atuação ministerial eficaz e transformadora.
+    </div>
+    <div id="content-proposta-05">
+## Gestão Estratégica e Transparência
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Plano-Geral de Atuação Participativo
+
+- **Conduzir a construção participativa** do **Plano-Geral de Atuação (PGA) 2026/2028**, integrando as **demandas da sociedade** — colhidas nas edições dos **Diálogos Regionais** — aos **compromissos estratégicos** da gestão, com **ampla participação** de membros e servidores, assegurando a **definição de metas** claras, mensuráveis e exequíveis.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Canais de Escuta Social
+
+- **Ampliar os canais de diálogo e escuta social**, por meio de **pesquisas de opinião** regulares e **consultas públicas** temáticas, **incorporando** seus resultados ao **planejamento estratégico**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Gestão Itinerante
+
+- **Implementar um modelo de gestão itinerante**, com a **presença periódica** da Administração Superior nas comarcas, **aproximando a tomada de decisão** da realidade vivida nas promotorias do interior.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> Relatórios Interativos
+
+- **Elaborar relatórios de gestão** **interativos**, **digitais** e com **linguagem acessível**, que possibilitem ao cidadão **acompanhar**, de forma clara e objetiva, a **aplicação dos recursos públicos** e os **resultados** das **políticas institucionais**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Comunicação Transparente
+
+- **Fortalecer os mecanismos de prestação de contas** e de **comunicação com a sociedade**, garantindo **transparência**, **objetividade** e **clareza** nas informações divulgadas.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a4 4 0 0 0-7.4-2.1L3.5 15.5a4 4 0 1 0 5.6 5.6L18 12.5a2 2 0 0 0-2.8-2.8L6.5 18.5a1 1 0 0 0 1.4 1.4L17 11.5a.5.5 0 0 0-.7-.7L8 17.5"/></svg> Governança Integrada
+
+- **Consolidar um modelo de governança integrado**, fortalecendo a **articulação** entre **órgãos administrativos e finalísticos** para assegurar **eficiência**, **impessoalidade** e **continuidade institucional**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Integridade e Compliance
+
+- **Expandir e aperfeiçoar** o **Programa de Integridade e Compliance**, incorporando **mecanismos de prevenção** a **riscos institucionais** e de **combate a fraudes**, alinhados às **diretrizes do CNMP** e às **boas práticas de governança pública**.
+
+- **Implantar trilhas de capacitação** em **integridade, ética e compliance** para membros e servidores, promovendo o **fortalecimento da cultura organizacional** baseada na **integridade**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Comunicação Institucional
+
+- **Intensificar campanhas de comunicação institucional** em **linguagem simples e acessível**, destacando a **atuação finalística do MPAC** e os **benefícios concretos** entregues à população.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> Projetos de Impacto
+
+- **Impulsionar e dar visibilidade** aos **projetos institucionais** que **aproximam o Ministério Público da sociedade**, garantindo **recursos, logística e apoio estratégico** para sua expansão, e **promovendo o reconhecimento** dessas iniciativas em **premiações estaduais e nacionais**, como forma de **valorizar** e **inspirar boas práticas** que **transformam realidades**.
+
+> **Compromisso:** Uma gestão transparente, participativa e estratégica, que presta contas à sociedade e constrói o futuro do MPAC com a participação de todos os seus integrantes.
+    </div>
+    <div id="content-proposta-06">
+## Capacitação e Formação Contínua
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> Programas Estruturados
+
+- **Oferecer programas estruturados** de **capacitação permanente**, com **trilhas formativas personalizadas** em áreas estratégicas (gestão, investigação, inovação, autocomposição, direitos humanos e integridade), alinhadas às **competências institucionais** e aos **interesses individuais** dos integrantes.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Participação Garantida
+
+- **Garantir a participação efetiva** de membros nos programas de capacitação, especialmente daqueles **lotados no interior**, mediante **convocação oficial**, com **dispensa das atribuições locais** durante o período do curso e assegurando o **custeio de diárias e passagens**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/><path d="M5 22v-5"/><path d="m5 17-2 5"/><path d="m5 17 2 5"/><path d="M19 22v-5"/><path d="m19 17-2 5"/><path d="m19 17 2 5"/></svg> Metodologias Inovadoras
+
+- **Implantar metodologias inovadoras de aprendizagem**, como **laboratórios de capacitação prática**, **oficinas de inovação** e o uso de **plataformas digitais interativas**, conectando o **aprendizado às demandas reais** da atuação finalística e **fortalecendo a aplicação prática** do conhecimento adquirido.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 12c0-5.25-4.25-9.5-9.5-9.5S2.5 6.75 2.5 12s4.25 9.5 9.5 9.5s9.5-4.25 9.5-9.5z"/><path d="M12 18v-6"/><path d="M12 8h.01"/></svg> Produção Acadêmica
+
+- **Valorizar a produção acadêmica e científica**, ampliando o **incentivo à participação** de membros e servidores em **atividades acadêmicas**, **grupos de pesquisa** e **redes científicas**, com **apoio a publicações**, **difusão de boas práticas institucionais**, **apresentação de trabalhos** e **participação** em **congressos** nacionais e internacionais.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Instrutoria Interna
+
+- **Estruturar um programa de instrutoria interna**, identificando **especialistas da própria instituição** para ministrar **cursos e oficinas**, **valorizando o conhecimento acumulado** e **reduzindo custos**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Capacitação no Interior
+
+- **Levar cursos e oficinas presenciais** às **comarcas do interior**, garantindo **inclusão** e **acessibilidade** para todos os integrantes.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Intercâmbio e Cooperação
+
+- **Estabelecer programas de intercâmbio e cooperação acadêmica**, possibilitando que integrantes do MPAC **participem de capacitações** em **instituições nacionais e estrangeiras**, além de promover **parcerias estratégicas** para cursos de **pós-graduação** e **especializações**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 9a4 4 0 0 0-7.4-2.1L3.5 15.5a4 4 0 1 0 5.6 5.6L18 12.5a2 2 0 0 0-2.8-2.8L6.5 18.5a1 1 0 0 0 1.4 1.4L17 11.5a.5.5 0 0 0-.7-.7L8 17.5"/></svg> Capacitação Conjunta
+
+- **Promover programas de capacitação conjunta** com **outros Ministérios Públicos** e **órgãos do sistema de justiça**, aproveitando **boas práticas**, **recursos compartilhados** e fomentando a **integração interinstitucional**.
+
+> **Visão:** Investir no desenvolvimento contínuo das pessoas é investir no futuro da instituição. Uma equipe bem capacitada é a base para uma atuação ministerial de excelência e transformação social.
+    </div>
+    <div id="content-proposta-07">
+## Relação interinstitucional e Orçamento
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> Orçamento Adequado
+
+- **Garantir orçamento adequado** e compatível com as **atribuições constitucionais** do MPAC, empreendendo esforços junto aos **Poderes do Estado** para assegurar **previsibilidade, equilíbrio e autonomia financeira**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Captação de Recursos
+
+- **Promover a captação de recursos externos**, por meio de **convênios, parcerias estratégicas e emendas parlamentares**, priorizando **projetos estruturantes**, **inovação institucional** e **fortalecimento da presença** do MPAC no **interior**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Articulação Institucional
+
+- **Fortalecer a articulação permanente** com os **Poderes Executivo, Legislativo e Judiciário**, bem como com **órgãos de controle e fiscalização**, em defesa da **autonomia administrativa e financeira** do Ministério Público.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> Alocação Transparente
+
+- **Estabelecer critérios objetivos e transparentes** para a **alocação dos recursos orçamentários**, baseados no **planejamento estratégico** e no **diagnóstico das necessidades reais** das unidades ministeriais.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Painéis de Acompanhamento
+
+- **Desenvolver e manter painéis digitais** de **acompanhamento orçamentário**, acessíveis a **membros, servidores e sociedade**, ampliando a **clareza sobre receitas, despesas e investimentos** institucionais.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Prestação de Contas Cidadã
+
+- **Publicar relatórios periódicos simplificados de prestação de contas** ("**prestação de contas cidadã**"), destacando a **aplicação dos recursos** e os **resultados alcançados**, em **linguagem clara e acessível**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Cooperação Interinstitucional
+
+- **Ampliar a cooperação interinstitucional** com **órgãos do sistema de justiça, universidades, organizações da sociedade civil e organismos internacionais**, visando **projetos conjuntos, inovação e captação de recursos**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> Protagonismo Nacional
+
+- **Participar ativamente** das **redes e colegiados nacionais** do Ministério Público (**CNPG, CONAMP, CNMP**), assegurando **protagonismo do MPAC** nas **pautas estratégicas** de interesse institucional.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> Capacitação em Gestão
+
+- **Implantar programa contínuo de capacitação** para **membros e gestores administrativos** em **orçamento, finanças públicas e captação de recursos**, fortalecendo a **profissionalização da gestão**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Uso Racional dos Recursos
+
+- **Estimular o uso racional dos recursos**, vinculando a **execução orçamentária** a **critérios de eficiência, sustentabilidade e inovação**, priorizando **investimentos em tecnologia, energia limpa** e **projetos de impacto social**.
+
+> **Meta:** Assegurar a autonomia financeira do MPAC através de uma gestão orçamentária eficiente, transparente e estratégica, fortalecendo parcerias que ampliem nossa capacidade de atuação em defesa da sociedade acreana.
+    </div>
+    <div id="content-proposta-08">
+## Aprimoramento da Gestão Administrativa e de Pessoas
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg> Gestão por Competências
+
+- **Aperfeiçoar o modelo de gestão por competências**, alinhando **perfis profissionais** às **necessidades institucionais** e promovendo maior **eficiência na alocação** de servidores.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> Valorização e Reconhecimento
+
+- **Aperfeiçoar política estruturada de valorização e reconhecimento** de membros e servidores, contemplando **planos de desenvolvimento individual**, mecanismos de **progressão** e **incentivo ao crescimento** na carreira.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Plataforma Integrada
+
+- **Implementar plataforma integrada** de **gestão administrativa e de recursos humanos**, unificando informações sobre **pessoal, folha de pagamento, benefícios, diárias e progressões**, assegurando maior **transparência** e **eficiência**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/><path d="M5 22v-5"/><path d="m5 17-2 5"/><path d="m5 17 2 5"/><path d="M19 22v-5"/><path d="m19 17-2 5"/><path d="m19 17 2 5"/></svg> Otimização de Processos
+
+- **Aprimorar os fluxos administrativos**, eliminando **burocracia excessiva** e **retrabalho**, com **padronização**, **celeridade** e **monitoramento contínuo** dos resultados.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Diversidade e Inclusão
+
+- **Implantar políticas afirmativas** de **diversidade**, **equidade de gênero** e **inclusão de pessoas com deficiência**, promovendo um **ambiente de trabalho** mais **justo, plural e representativo**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Convocação de Aprovados
+
+- **Realizar estudo técnico** para **convocação** de **membros e servidores** aprovados no concurso em trâmite, observando as **necessidades institucionais**, a **disponibilidade orçamentária** e a **priorização de áreas estratégicas** e **unidades do interior**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> Escuta Ativa
+
+- **Criar canais permanentes** de **escuta ativa** de servidores e membros sobre **melhorias administrativas**, garantindo maior **engajamento** nas decisões internas.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Gratificação Especial
+
+- **Instituir a Gratificação pelo Exercício de Trabalho em Condições Especiais**, destinada a servidores que, no exercício habitual de suas atribuições, estejam **expostos a risco** à **saúde** ou à **vida**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Conclusão de Obras
+
+- **Concluir as obras e empreendimentos** já previstos e com **recursos assegurados** na **LOA 2026**, incluindo as **unidades de Tarauacá, Capixaba**, o **auditório do MPAC** e a **instalação de kit de geradores de energia solar**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Novas Obras
+
+- **Captar recursos** para **execução de novas obras**, com destaque para a **construção da sede do GAECO** em Rio Branco, além de outros **projetos estruturantes** para **fortalecer a atuação institucional**.
+
+> **Objetivo:** Modernizar a gestão administrativa e de pessoas, criando um ambiente de trabalho eficiente, justo e acolhedor, que valorize cada integrante e potencialize os resultados institucionais.
+    </div>
+    <div id="content-proposta-09">
+## Fortalecimento dos Órgãos Auxiliares
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Estrutura e Recursos
+
+- **Reforçar a estrutura** física, tecnológica e de pessoal dos **órgãos auxiliares**, assegurando **condições adequadas** para **apoio qualificado** à **atividade finalística**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg> Critérios de Priorização
+
+- **Estabelecer critérios claros de priorização** no **atendimento** dos órgãos auxiliares às promotorias, assegurando **distribuição equilibrada** dos **recursos técnicos**, especialmente para **comarcas do interior**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Interiorização
+
+- **Interiorizar a atuação** de órgãos auxiliares **estratégicos**, ampliando sua **presença** em **regiões** do estado com **maior demanda**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Integração e Articulação
+
+- **Promover maior integração** entre **órgãos auxiliares e promotorias**, garantindo **padronização de procedimentos**, **compartilhamento de boas práticas** e **atuação articulada** em casos de **maior complexidade**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Ampliação do Quadro Técnico
+
+- **Ampliar o quadro de profissionais de apoio técnico** (analistas e especialistas), assegurando **formação contínua** e **parcerias** com **universidades** e **centros de pesquisa**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg> Capacitação e Conhecimento
+
+- **Implantar programas de capacitação** e **difusão de conhecimento** promovidos pelos **órgãos auxiliares**, estimulando a **uniformização de entendimentos** e a **qualificação** da atuação institucional.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5 2 5 5 2-5 2-2 5-2-5-5-2 5-2 2-5z"/><path d="M5 22v-5"/><path d="m5 17-2 5"/><path d="m5 17 2 5"/><path d="M19 22v-5"/><path d="m19 17-2 5"/><path d="m19 17 2 5"/></svg> SeringalLAB
+
+- **Expandir as atividades do Laboratório de Inovação (SeringalLAB)** como **núcleo de pesquisa aplicada** e **desenvolvimento de soluções tecnológicas e metodológicas** para a **atuação ministerial**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Inteligência Institucional
+
+- **Estruturar e ampliar a atividade de inteligência institucional**, com foco em **prevenção e combate ao crime organizado** e em **apoio estratégico à gestão**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> Visibilidade e Transparência
+
+- **Dar maior visibilidade** ao trabalho dos **órgãos auxiliares**, por meio de **relatórios periódicos** e **painéis de BI** acessíveis à **classe ministerial** e à **sociedade**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg> Canais Digitais
+
+- **Criar canais digitais permanentes** para **difusão de boas práticas**, **orientações** e **dados técnicos** produzidos, assegurando **comunicação clara, padronizada e acessível**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Plataforma Digital
+
+- **Disponibilizar em plataforma digital** os **principais produtos** e **orientações** dos órgãos auxiliares, assegurando **transparência** e ampliando a **aproximação** com a **sociedade civil** e a **academia**.
+
+> **Visão:** Órgãos auxiliares fortalecidos são a base para uma atuação ministerial de excelência. Investir no apoio técnico especializado é investir na qualidade e efetividade de toda a instituição.
+    </div>
+    <div id="content-proposta-10">
+## Eixo para Construção Coletiva
+
+A gestão que proponho não é um projeto individual, mas sim um **compromisso de construção colaborativa**, o que fortalece o desejo de uma **instituição integrada e coesa**. Por isso, este eixo será **definido a partir da escuta ativa** dos **membros e servidores do MPAC**, garantindo que **cada voz tenha espaço** na definição das **prioridades institucionais**.
+
+Por meio de **formulários eletrônicos**, será possível registrar **propostas, sugestões e críticas** que **orientem uma nova gestão**. O objetivo é assegurar que o **plano de atuação** da Procuradoria-Geral de Justiça reflita não apenas a **visão da candidata**, mas sobretudo as **necessidades reais** e o **sentimento coletivo** da instituição.
+
+A **construção compartilhada** fortalece o **sentimento de pertencimento**, **amplia a legitimidade** das escolhas e reafirma o compromisso de que a **gestão será feita com todos e para todos**, em um movimento contínuo de **inovação, diálogo e corresponsabilidade**.
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Princípios da Construção Coletiva
+
+- **Participação Democrática:** Todos os integrantes do MPAC têm voz na construção das políticas institucionais
+- **Escuta Ativa:** Valorização genuína das contribuições de membros e servidores
+- **Transparência:** Processo aberto e claro de coleta e incorporação de sugestões
+- **Corresponsabilidade:** Compartilhamento das responsabilidades na implementação das propostas
+- **Inovação Colaborativa:** Estímulo à criatividade coletiva na busca de soluções
+
+### <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Como Participar
+
+Sua participação é fundamental para construirmos juntos o futuro do MPAC. Contribua com suas ideias, sugestões e propostas através do formulário abaixo.
+
+<div class="form-section" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 20px; padding: 40px; margin: 40px 0; text-align: center; border: 2px solid rgba(11, 106, 165, 0.2);">
+  <h3 style="margin-top:0;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.232 5.232 3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> Formulário de Contribuições</h3>
+  <p>Participe da construção coletiva do Plano de Gestão 2026-2028</p>
+  
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSc64DPj5fL1qiXoY5e4R3I-JbtDNGdoix8PFzjS_ahTladq7Q/viewform" target="_blank" style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 32px; background: linear-gradient(135deg, #0b6aa5, #17324d); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 18px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(11, 106, 165, 0.3);">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15.232 5.232 3.536 3.536m-2.036-5.036a2.5 2.5 0 1 1 3.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg> Preencher Formulário de Contribuições
+  </a>
+  
+  <p style="margin: 20px 0; color: #64748b;">Ou escaneie o QR Code abaixo:</p>
+  
+  <img src="https://static.wixstatic.com/media/c94490_846508e5342f44ca9352abb45d54b61c~mv2.png" alt="QR Code do formulário" style="display: block; margin: 24px auto; max-width: 200px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); padding: 16px; background: white; border: 3px solid #cda661;">
+</div>
+
+> **Compromisso:** Uma gestão verdadeiramente participativa, onde cada integrante do MPAC é protagonista na construção de uma instituição mais forte, moderna e próxima da sociedade acreana.
     </div>
   </div>
 
@@ -749,12 +1392,17 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxClose = document.getElementById('lightboxClose');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxDesc = document.getElementById('lightboxDesc');
+
   document.querySelectorAll('#imagens .gallery-grid a').forEach(a => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
       const img = a.querySelector('img');
       if(img){
-        lightboxImg.src = img.src.replace('/800/600', '/1600/1200');
+        lightboxImg.src = a.href;
+        lightboxTitle.textContent = a.dataset.title || '';
+        lightboxDesc.textContent = a.dataset.description || '';
         lightbox.classList.add('open');
       }
     });
@@ -763,6 +1411,50 @@ Ingressou no **Ministério Público do Estado do Acre em 2009**.
   lightboxClose.addEventListener('click', closeLightbox);
   lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
+
+  // --- Modal de Conteúdo ---
+  const contentModal = document.getElementById('contentModal');
+  const contentModalTitle = document.getElementById('contentModalTitle');
+  const contentModalBody = document.getElementById('contentModalBody');
+  const contentModalClose = document.getElementById('contentModalClose');
+
+  function openContentModal(title, content) {
+    contentModalTitle.textContent = title;
+    contentModalBody.innerHTML = marked.parse(content);
+    contentModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeContentModal() {
+    contentModal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  contentModalClose.addEventListener('click', closeContentModal);
+  contentModal.addEventListener('click', (e) => {
+    if (e.target === contentModal) {
+      closeContentModal();
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeContentModal();
+    }
+  });
+
+  document.querySelectorAll('[data-modal-trigger]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const targetId = trigger.getAttribute('data-modal-trigger');
+      const modalTitle = trigger.getAttribute('data-modal-title');
+      const contentEl = document.getElementById(targetId);
+      if (contentEl) {
+        openContentModal(modalTitle, contentEl.innerHTML);
+      } else {
+        console.error('Elemento de conteúdo do modal não encontrado:', targetId);
+      }
+    });
+  });
+
 </script>
 
 </body>
