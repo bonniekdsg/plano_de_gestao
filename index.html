@@ -259,6 +259,23 @@
   .gallery-grid img{display:block; width:100%; aspect-ratio: 4 / 3; object-fit:cover; transition:transform .4s cubic-bezier(.4,0,.2,1)}
   .gallery-grid a:hover img{transform:scale(1.08)}
 
+  .collective-banner {
+    display: block;
+    margin: 40px 0 20px;
+    border-radius: var(--radius, 14px);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+  }
+  .collective-banner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.08);
+  }
+  .collective-banner img {
+    width: 100%;
+    display: block;
+  }
+
   /* Lightbox (modal de imagem) */
   .lightbox{position:fixed; inset:0; background:rgba(0,0,0,.85); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; z-index:2000; padding:20px; cursor:zoom-out; opacity:0; transition:opacity .3s ease}
   .lightbox.open{display:flex; opacity:1}
@@ -449,6 +466,14 @@ Elas estão organizadas em **eixos estratégicos** que buscam alinhar:
 
 > Objetivo: garantir maior **resolutividade**, **transparência** e **eficiência**.
       </div>
+
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc64DPj5fL1qiXoY5e4R3I-JbtDNGdoix8PFzjS_ahTladq7Q/viewform" target="_blank" class="collective-banner" aria-label="Participe da Construção Coletiva do Plano de Gestão (abre em nova aba)">
+        <picture>
+          <source media="(max-width: 767px)" srcset="https://static.wixstatic.com/media/c96204_95a15125e05444129cbb8f5d61876ee3~mv2.png">
+          <source media="(min-width: 768px)" srcset="https://static.wixstatic.com/media/c96204_5ed0ec400ab24e2e90210569b7bafadd~mv2.png">
+          <img src="https://static.wixstatic.com/media/c96204_5ed0ec400ab24e2e90210569b7bafadd~mv2.png" alt="Participe da Construção Coletiva do Plano de Gestão">
+        </picture>
+      </a>
 
       <div class="proposals-grid">
         <button type="button" class="proposal-btn" data-modal-trigger="content-proposta-01" data-modal-title="01 - Transformação Tecnológica e Inovação">
@@ -1490,10 +1515,14 @@ Sua participação é fundamental para construirmos juntos o futuro do MPAC. Con
   const contentModalTitle = document.getElementById('contentModalTitle');
   const contentModalBody = document.getElementById('contentModalBody');
   const contentModalClose = document.getElementById('contentModalClose');
+  const contentModalBox = contentModal ? contentModal.querySelector('.content-modal-box') : null;
 
   function openContentModal(title, content) {
     contentModalTitle.textContent = title;
     contentModalBody.innerHTML = marked.parse(content);
+    if (contentModalBox) {
+      contentModalBox.scrollTop = 0;
+    }
     contentModal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
